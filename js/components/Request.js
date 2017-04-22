@@ -22,11 +22,7 @@ function createHeaders(token: ?string) {
 type doRequestParams = { url: string, method: MethodType, body?: ?string, token?: string };
 async function doRequest(params: doRequestParams): Promise<Response> {
   const { url, method, body, token } = params;
-  const request = new Request(`https://mstdn.jp/api/v1/${url}`, {
-    headers: createHeaders(token),
-    method,
-    body
-  });
+  const request = new Request(url, { headers: createHeaders(token), method, body });
   try {
     const response = await fetch(request);
     if (!(response.status >= 200 && response.status < 400)) {

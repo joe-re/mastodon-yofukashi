@@ -1,46 +1,46 @@
-import React, { PropTypes } from 'react';
-import {
-  Button,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+// @flow
+
+import { Button, StyleSheet, TextInput, View, Text } from 'react-native';
+import { Component } from 'react';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F5FCFF'
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
+  view: { marginBottom: 8 },
+  textInput: { width: 200, height: 40, borderColor: 'gray', borderWidth: 1 }
 });
 
-const LoginScreen = ({ navigation }) => (
-  <View style={styles.container}>
-    <Text style={styles.welcome}>
-      Screen A
-    </Text>
-    <Text style={styles.instructions}>
-      This is great
-    </Text>
-    <Button
-      onPress={() => navigation.dispatch({ type: 'Login' })}
-      title="Log in"
-    />
-  </View>
-);
+export default class LoginScreen extends Component {
+  state: { domain: string };
+  constructor(props: any) {
+    super(props);
+    this.state = { domain: '' };
+  }
 
-LoginScreen.propTypes = {
-  navigation: PropTypes.object.isRequired,
-};
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.view} >Log into any Mastodon Instance!</Text>
+        <View style={styles.view}>
+          <TextInput
+            style={styles.textInput}
+            onChangeText={(text) => this.setState({ domain: text })}
+            value={this.state.domain}
+            placeholder="mastodon.social"
+          />
+        </View>
+        <Button
+          onPress={() => this.props.actions.enterDomain({ domain: this.state.domain })}
+          title="Login"
+        />
+      </View>
+    );
+  }
+}
 
-LoginScreen.navigationOptions = {
-  title: 'Log In',
-};
-
-export default LoginScreen;
+LoginScreen.navigationOptions = { title: 'Log In' };

@@ -1,13 +1,12 @@
 // @flow
 
-import React from 'react';
-import { Provider, connect } from 'react-redux';
+import { connect } from 'react-redux';
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 
-import LoginScreen from '../components/LoginScreen';
+import LoginContainer from '../containers/LoginContainer';
 
 export const AppNavigator = StackNavigator({
-  Login: { screen: LoginScreen }
+  Login: { screen: LoginContainer }
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (
