@@ -1,14 +1,19 @@
 // @flow
 
 import { bindActionCreators } from 'redux';
+import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { Component } from 'react';
 import * as Actions from '../actions';
 import LoginScreen from '../components/LoginScreen';
-import type { Dispatch } from 'redux';
 
-const LoginContainer = (props: any) => (
-  <LoginScreen {...props} />
-);
+class LoginContainer extends Component {
+  static navigationOptions = { title: 'Log In' };
+
+  render() {
+    return <LoginScreen {...this.props} />;
+  }
+}
 
 const mapStateToProps = (state: any) => ({
   nav: state.nav

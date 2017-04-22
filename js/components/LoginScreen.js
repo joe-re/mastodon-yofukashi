@@ -29,7 +29,9 @@ export default class LoginScreen extends Component {
         <View style={styles.view}>
           <TextInput
             style={styles.textInput}
-            onChangeText={(text) => this.setState({ domain: text })}
+            onChangeText={(text) => {
+              this.setState({ domain: text });
+            }}
             value={this.state.domain}
             placeholder="mastodon.social"
           />
@@ -42,5 +44,3 @@ export default class LoginScreen extends Component {
     );
   }
 }
-
-LoginScreen.navigationOptions = { title: 'Log In' };

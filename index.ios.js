@@ -1,12 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
+ // @flow
 
 import { AppRegistry } from 'react-native';
 import React from 'react';
+import App from './js/app';
+
 window.React = React;
 
-import App from './js/app';
 AppRegistry.registerComponent('MastodonYofukashi', () => App);

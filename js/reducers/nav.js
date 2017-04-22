@@ -1,14 +1,21 @@
-import { NavigationActions } from 'react-navigation';
-import { AppNavigator } from '../navigators/AppNavigator';
+// @flow
 
-const initialNavState = {
-  index: 0,
-  routes: [ { key: 'InitA', routeName: 'Login' } ]
+import { AppNavigator } from '../navigators/AppNavigator';
+import type { ActionTypes } from '../actions';
+
+export type State = {
+  index: number,
+  routes: { key: string, routeName: string }[]
 };
 
-const nav = (state=initialNavState, action) => {
+const initialNavState: State = {
+  index: 0,
+  routes: [{ key: 'InitA', routeName: 'Login' }]
+};
+
+const nav = (state: State=initialNavState, action: ActionTypes) => {
   const newState = AppNavigator.router.getStateForAction(action, state);
-  return (newState ? newState : state);
+  return newState || state;
 };
 
 export default nav;

@@ -1,0 +1,49 @@
+{
+  "parser": "babel-eslint",
+  "plugins": ["react"],
+  "extends": ["airbnb", "plugin:react/recommended"],
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "env": {
+    "node": true,
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "it": true,
+    "describe": true,
+    "expect": true,
+    "assert": true,
+    "React$Element": true,
+    "React$Component": true
+  },
+  "rules": {
+    "react/prop-types": 0,
+    "quotes": ["error", "single"],
+    "react/jsx-filename-extension": 0,
+    "global-require": 0,
+    "no-unused-vars": [1, {"vars": "all", "args": "after-used", "argsIgnorePattern": "^_"}],
+    "react/react-in-jsx-scope": 0,
+    "react/sort-comp": [1, {
+      "order": [
+        "state",
+        "props",
+        "/^_.+$/",
+        "constructor",
+        "lifecycle",
+        "everything-else",
+        "render"
+      ]
+    }],
+    "comma-dangle": 0,
+    "class-methods-use-this": 0,
+    "no-underscore-dangle": 0,
+    "no-return-assign": 0,
+    "import/extensions": 0,
+    "react/no-array-index-key": 0,
+    "import/no-unresolved": [2, { "ignore": ["png$"]}],
+    "react/no-unused-prop-types": 0,
+    "react/require-default-props": 0
+  }
+}

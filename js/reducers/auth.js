@@ -1,11 +1,11 @@
 // @flow
 
 import type { ActionTypes } from '../actions';
-export type State = {|
-  domain: string
-|};
+import type { App } from '../types/App';
 
-const createInitialState = () => ({ domain: '' });
+export type State = {| domain: string, app: ?App |};
+
+const createInitialState = () => ({ domain: '', app: null });
 
 const timeline = (state: State = createInitialState(), action: ActionTypes): State => {
   switch (action.type) {

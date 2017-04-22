@@ -1,8 +1,8 @@
 // @flow
 
 import deserializeJSONResponse from './deserializeJSONResponse';
-import Request from './Request';
 import type { App } from '../types/App';
+import Request from './Request';
 
 function createOAuthApp(params: { domain: string }): Promise<App> {
   return deserializeJSONResponse(

@@ -5,7 +5,6 @@ export default async function deserializeJSONResponse<T>(
 ): Promise<T> {
   try {
     const response = await promise;
-    debugger;
     const json = await response.json().catch(() => null);
     if (cb) {
       return cb(json);
