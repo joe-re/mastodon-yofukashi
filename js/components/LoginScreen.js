@@ -2,6 +2,9 @@
 
 import { Button, StyleSheet, TextInput, View, Text } from 'react-native';
 import { Component } from 'react';
+import Actions from '../actions';
+import type { State as NavState } from '../reducers/nav';
+import type { State as AuthState } from '../reducers/auth';
 
 const styles = StyleSheet.create({
   container: {
@@ -11,24 +14,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
   },
-  view: { marginBottom: 8 },
-  textInput: { width: 200, height: 40, borderColor: 'gray', borderWidth: 1 }
+  view: { marginHorizontal: 20, marginBottom: 8 },
+  domainInput: { width: 300, height: 40, borderColor: 'gray', borderWidth: 1 },
+  tokenInput: { width: 300, height: 100, borderColor: 'gray', borderWidth: 1 }
 });
 
 export default class LoginScreen extends Component {
-  state: { domain: string };
+  state: { domain: string, authorizationCode: string };
+  props: { nav: NavState, actions: typeof Actions, auth: AuthState };
   constructor(props: any) {
     super(props);
-    this.state = { domain: '' };
+    this.state = { domain: '', authorizationCode: '' };
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.view} >Log into any Mastodon Instance!</Text>
+        <Text style={styles.view} >
+          First, input any Mastodon Instance and open authorization link.
+        </Text>
         <View style={styles.view}>
           <TextInput
-            style={styles.textInput}
+            style={styles.domainInput}
             onChangeText={(text) => {
               this.setState({ domain: text });
             }}
@@ -37,7 +44,24 @@ export default class LoginScreen extends Component {
           />
         </View>
         <Button
-          onPress={() => this.props.actions.enterDomain({ domain: this.state.domain })}
+          onPress={() => this.props.actions.openAuthorizationLink({ domain: this.state.domain })}
+          title="Open Autorization Link"
+        />
+        <Text>Second, copy and paste shown authorization code and put login button.</Text>
+        <View style={styles.view}>
+          <TextInput
+            style={styles.tokenInput}
+            onChangeText={(text) => {
+              this.setState({ authorizationCode: text });
+            }}
+            value={this.state.authorizationCode}
+          />
+        </View>
+        <Button
+          onPress={() => this.props.actions.login({
+            authorizationCode: this.state.authorizationCode,
+            auth: this.props.auth
+          })}
           title="Login"
         />
       </View>

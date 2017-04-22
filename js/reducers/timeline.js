@@ -1,15 +1,15 @@
 // @flow
 
 export type State = {|
-  timeline: []
+  data: any[]
 |};
 
-const createInitialState = () => ({ timeline: [] });
+const createInitialState = () => ({ data: [] });
 
 const timeline = (state: State = createInitialState(), action: any): State => {
   switch (action.type) {
     case 'FETCH_TIMELINE_FULFILLED':
-      return Object.assign(createInitialState(), state, { timeline: action.payload.timeline });
+      return Object.assign(createInitialState(), state, { data: action.payload.timeline });
     default:
       return state;
   }

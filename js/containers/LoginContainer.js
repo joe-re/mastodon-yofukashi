@@ -4,19 +4,24 @@ import { bindActionCreators } from 'redux';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Component } from 'react';
-import * as Actions from '../actions';
+import Actions from '../actions';
 import LoginScreen from '../components/LoginScreen';
+import type { ReduxState } from '../reducers';
+import type { State as NavState } from '../reducers/nav';
+import type { State as AuthState } from '../reducers/auth';
 
 class LoginContainer extends Component {
-  static navigationOptions = { title: 'Log In' };
+  props: { nav: NavState, auth: AuthState, actions: typeof Actions };
+  static navigationOptions = { title: 'Login' };
 
   render() {
     return <LoginScreen {...this.props} />;
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  nav: state.nav
+const mapStateToProps = (state: ReduxState) => ({
+  nav: state.nav,
+  auth: state.auth
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<*>) => ({
