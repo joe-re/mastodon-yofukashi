@@ -5,9 +5,11 @@ import { Linking } from 'react-native';
 import { buildQueryURL } from './api_utils/Request';
 import AuthAPI from './api_utils/AuthAPI';
 import AccountsAPI from './api_utils/AccountsAPI';
+import TimelineAPI from './api_utils/TimelineAPI';
 import type { App } from './types/App';
 import type { Account } from './types/Account';
 import type { OAuth } from './types/OAuth';
+import type { Status } from './types/Status';
 import type { State as AuthState } from './reducers/auth';
 
 type ENTER_DOMAIN_PAYLOAD = { payload: { domain: string, app: App } };
@@ -35,21 +37,42 @@ function openAuthorizationLink(params: { domain: string }) {
 type LOGIN_PAYLOAD = { payload: { account: Account, oauth: OAuth } };
 type LOGIN_ACTION = { type: 'LOGIN', payload: Promise<LOGIN_PAYLOAD> };
 type LOGIN_FULFILLED = { type: 'LOGIN_FULFILLED' } & LOGIN_PAYLOAD;
-function login(params: { auth: AuthState, authorizationCode: string }) {
+function login(params: { auth: AuthState, authorizationCode: string, cb?: Function }) {
   return (dispatch: Dispatch<LOGIN_ACTION>) => {
     const fetch = AuthAPI.getAccessToken(params).then(oauth =>
       AccountsAPI.verifyCredential({
         domain: params.auth.domain, accessToken: oauth.access_token
-      }).then(account => ({ oauth, account })));
+      }).then((account) => {
+        if (params.cb) {
+          params.cb();
+        }
+        return { oauth, account };
+      }));
     dispatch({ type: 'LOGIN', payload: fetch });
+  };
+}
+
+type GET_HOME_TIMELINE_PAYLOAD = { payload: { timeline: Status[] } };
+type GET_HOME_TIMELINE_ACTION = { type: 'GET_HOME_TIMELINE', payload: Promise<GET_HOME_TIMELINE_PAYLOAD> };
+type GET_HOME_TIMELINE_FULFILLED = { type: 'GET_HOME_TIMELINE_FULFILLED' } & GET_HOME_TIMELINE_PAYLOAD;
+function getHomeTimeline(params: { auth: AuthState }) {
+  return (dispatch: Dispatch<GET_HOME_TIMELINE_ACTION>) => {
+    const oauth = params.auth.oauth;
+    const fetch = TimelineAPI.getHome({
+      domain: params.auth.domain,
+      accessToken: (oauth && oauth.access_token) || ''
+    }).then(res => ({ timeline: res }));
+    dispatch({ type: 'GET_HOME_TIMELINE', payload: fetch });
   };
 }
 
 export type ActionTypes =
   ENTER_DOMAIN_FULFILLED |
-  LOGIN_FULFILLED;
+  LOGIN_FULFILLED |
+  GET_HOME_TIMELINE_FULFILLED;
 
 export default {
   openAuthorizationLink,
-  login
+  login,
+  getHomeTimeline
 };

@@ -26,7 +26,7 @@ function renderRow(params: any) {
 export default function Timeline(props: { timeline: TimelineState, actions: typeof Actions }) {
   return (
     <YofukashiListView
-      dataSource={props.timeline.data}
+      dataSource={props.timeline.statuses}
       renderRow={(v: any) => renderRow(v)}
       rowHasChanged={(r1, r2) => r1 !== r2}
     />

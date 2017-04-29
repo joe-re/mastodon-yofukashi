@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 import { addNavigationHelpers, StackNavigator } from 'react-navigation';
 
 import LoginContainer from '../containers/LoginContainer';
+import TimelineContainer from '../containers/TimelineContainer';
 
 export const AppNavigator = StackNavigator({
-  Login: { screen: LoginContainer }
+  Login: { screen: LoginContainer },
+  Timeline: { screen: TimelineContainer },
 });
 
 const AppWithNavigationState = ({ dispatch, nav }) => (

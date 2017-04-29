@@ -28,6 +28,7 @@ export default class LoginScreen extends Component {
   }
 
   render() {
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <Text style={styles.view} >
@@ -60,7 +61,8 @@ export default class LoginScreen extends Component {
         <Button
           onPress={() => this.props.actions.login({
             authorizationCode: this.state.authorizationCode,
-            auth: this.props.auth
+            auth: this.props.auth,
+            cb: () => this.props.navigation.navigate('Timeline')
           })}
           title="Login"
         />
