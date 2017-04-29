@@ -21,14 +21,13 @@ const styles = StyleSheet.create({
 
 export default class LoginScreen extends Component {
   state: { domain: string, authorizationCode: string };
-  props: { nav: NavState, actions: typeof Actions, auth: AuthState };
+  props: { actions: typeof Actions, auth: AuthState, navigation: any };
   constructor(props: any) {
     super(props);
     this.state = { domain: '', authorizationCode: '' };
   }
 
   render() {
-    console.log(this.props);
     return (
       <View style={styles.container}>
         <Text style={styles.view} >

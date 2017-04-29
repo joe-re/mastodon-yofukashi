@@ -3,7 +3,7 @@
 import { View, Text, WebView, Dimensions, Image } from 'react-native';
 import YofukashiListView from './YofukashiListView';
 import Actions from '../actions';
-import type { State as TimelineState } from '../reducers/timeline';
+import type { Status } from '../types/Status';
 
 const BGWASH = 'rgba(255,255,255,0.8)';
 
@@ -23,10 +23,10 @@ function renderRow(params: any) {
   );
 }
 
-export default function Timeline(props: { timeline: TimelineState, actions: typeof Actions }) {
+export default function Timeline(props: { statuses: Status[], actions: typeof Actions }) {
   return (
     <YofukashiListView
-      dataSource={props.timeline.statuses}
+      dataSource={props.statuses}
       renderRow={(v: any) => renderRow(v)}
       rowHasChanged={(r1, r2) => r1 !== r2}
     />

@@ -11,7 +11,7 @@ function getHome(params: {
 }): Promise<Status[]> {
   return deserializeJSONResponse(
     Request.get({
-      url: `https://${params.domain}/api/v1/timeline/home`,
+      url: `https://${params.domain}/api/v1/timelines/home`,
       accessToken: params.accessToken,
     })
   );

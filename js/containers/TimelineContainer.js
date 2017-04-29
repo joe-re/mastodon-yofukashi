@@ -5,18 +5,17 @@ import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Component } from 'react';
 import Actions from '../actions';
-import Timeline from '../components/Timeline';
+import HomeTimelineScreen from '../components/HomeTimelineScreen';
 import type { ReduxState } from '../reducers';
-import type { State as NavState } from '../reducers/nav';
 import type { State as AuthState } from '../reducers/auth';
 import type { State as TimelineState } from '../reducers/timeline';
 
 class TimelineContainer extends Component {
-  props: { nav: NavState, auth: AuthState, actions: typeof Actions, timeline: TimelineState };
+  props: { auth: AuthState, actions: typeof Actions, timeline: TimelineState };
   static navigationOptions = { title: 'Timeline' };
 
   render() {
-    return <Timeline {...this.props} />;
+    return <HomeTimelineScreen {...this.props} />;
   }
 }
 

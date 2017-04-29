@@ -5,7 +5,7 @@ import { Linking } from 'react-native';
 import { buildQueryURL } from './api_utils/Request';
 import AuthAPI from './api_utils/AuthAPI';
 import AccountsAPI from './api_utils/AccountsAPI';
-import TimelineAPI from './api_utils/TimelineAPI';
+import TimelinesAPI from './api_utils/TimelinesAPI';
 import type { App } from './types/App';
 import type { Account } from './types/Account';
 import type { OAuth } from './types/OAuth';
@@ -44,7 +44,7 @@ function login(params: { auth: AuthState, authorizationCode: string, cb?: Functi
         domain: params.auth.domain, accessToken: oauth.access_token
       }).then((account) => {
         if (params.cb) {
-          params.cb();
+          setTimeout(params.cb, 0);
         }
         return { oauth, account };
       }));
@@ -58,7 +58,7 @@ type GET_HOME_TIMELINE_FULFILLED = { type: 'GET_HOME_TIMELINE_FULFILLED' } & GET
 function getHomeTimeline(params: { auth: AuthState }) {
   return (dispatch: Dispatch<GET_HOME_TIMELINE_ACTION>) => {
     const oauth = params.auth.oauth;
-    const fetch = TimelineAPI.getHome({
+    const fetch = TimelinesAPI.getHome({
       domain: params.auth.domain,
       accessToken: (oauth && oauth.access_token) || ''
     }).then(res => ({ timeline: res }));

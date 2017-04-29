@@ -16,6 +16,7 @@ function createHeaders(accessToken: ?string) {
   if (accessToken) {
     headers.append('Authorization', `Bearer ${accessToken}`);
   }
+  console.log(accessToken);
   return headers;
 }
 

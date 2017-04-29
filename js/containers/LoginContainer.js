@@ -7,11 +7,10 @@ import { Component } from 'react';
 import Actions from '../actions';
 import LoginScreen from '../components/LoginScreen';
 import type { ReduxState } from '../reducers';
-import type { State as NavState } from '../reducers/nav';
 import type { State as AuthState } from '../reducers/auth';
 
 class LoginContainer extends Component {
-  props: { nav: NavState, auth: AuthState, actions: typeof Actions };
+  props: { auth: AuthState, actions: typeof Actions, navigation: any };
   static navigationOptions = { title: 'Login' };
 
   render() {
