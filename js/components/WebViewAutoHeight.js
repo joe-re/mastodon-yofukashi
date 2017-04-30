@@ -47,6 +47,7 @@ const injection = `
 
 const codeInject = html => html.replace(BODY_TAG_PATTERN, `${injection}</body>`);
 
+const MIN_HEIGHT = 40;
 export default class WebViewAutoHeight extends React.Component {
   props: any;
   state: any;
@@ -56,7 +57,7 @@ export default class WebViewAutoHeight extends React.Component {
     super(props);
     this._handleNavigationChange = this.handleNavigationChange.bind(this);
     this.state = {
-      contentHeight: this.props.minHeight || 100,
+      contentHeight: this.props.minHeight || MIN_HEIGHT,
     };
   }
 
@@ -84,7 +85,7 @@ export default class WebViewAutoHeight extends React.Component {
           {...otherProps}
           source={{ html: codeInject(html) }}
           scrollEnabled={false}
-          style={[style, { height: Math.max(this.state.contentHeight, 100) }]}
+          style={[style, { height: Math.max(this.state.contentHeight, MIN_HEIGHT) }]}
           javaScriptEnabled
           onNavigationStateChange={this._handleNavigationChange}
         />
