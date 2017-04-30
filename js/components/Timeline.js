@@ -1,6 +1,7 @@
 // @flow
 
-import { View, Text, WebView, Dimensions, Image } from 'react-native';
+import { View, Text, Dimensions, Image } from 'react-native';
+import WebView from './WebViewAutoHeight';
 import YofukashiListView from './YofukashiListView';
 import Actions from '../actions';
 import type { Status } from '../types/Status';
@@ -9,15 +10,12 @@ const BGWASH = 'rgba(255,255,255,0.8)';
 
 function renderRow(params: any) {
   return (
-    <View style={{ height: 120 }}>
+    <View width={Dimensions.get('window').width}>
       <Text>{params.account.display_name}</Text>
       <Image style={{ height: 40, width: 40 }} source={{ uri: params.account.avatar }} />
       <WebView
-        style={{
-          backgroundColor: BGWASH,
-          width: Dimensions.get('window').width
-        }}
-        source={{ html: params.content }}
+        style={{ backgroundColor: BGWASH }}
+        source={{ html: `<body>${params.content}</body>` }}
       />
     </View>
   );
