@@ -15,7 +15,7 @@ function renderRow(params: any) {
       <Image style={{ height: 40, width: 40 }} source={{ uri: params.account.avatar }} />
       <WebView
         style={{ backgroundColor: BGWASH }}
-        source={{ html: `<body>${params.content}</body>` }}
+        source={{ html: params.content }}
       />
     </View>
   );
