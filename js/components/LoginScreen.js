@@ -3,7 +3,6 @@
 import { Button, StyleSheet, TextInput, View, Text } from 'react-native';
 import { Component } from 'react';
 import Actions from '../actions';
-import type { State as NavState } from '../reducers/nav';
 import type { State as AuthState } from '../reducers/auth';
 
 const styles = StyleSheet.create({
@@ -12,7 +11,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    backgroundColor: 'white'
   },
   view: { marginHorizontal: 20, marginBottom: 8 },
   domainInput: { width: 300, height: 40, borderColor: 'gray', borderWidth: 1 },

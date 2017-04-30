@@ -1,17 +1,23 @@
 // @flow
 
 import { View, Text, Dimensions, Image, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import WebView from './WebViewAutoHeight';
 import YofukashiListView from './YofukashiListView';
 import Actions from '../actions';
 import type { Status } from '../types/Status';
 
-const BGWASH = 'rgba(255,255,255,0.8)';
-
 const styles = StyleSheet.create({
   row: {
     flex: 1,
     flexDirection: 'row'
+  },
+  actions: {
+    flex: 1,
+    flexDirection: 'row'
+  },
+  action: {
+    marginRight: 24
   }
 });
 
@@ -22,9 +28,13 @@ function renderRow(params: any) {
       <View style={{ flex: 1 }}>
         <Text>{params.account.display_name}</Text>
         <WebView
-          style={{ backgroundColor: BGWASH }}
           source={{ html: params.content }}
         />
+        <View style={styles.actions}>
+          <Icon style={styles.action} name="reply" size={22} />
+          <Icon style={styles.action} name="retweet" size={22} />
+          <Icon style={styles.action} name="star" size={22} />
+        </View>
       </View>
     </View>
   );
