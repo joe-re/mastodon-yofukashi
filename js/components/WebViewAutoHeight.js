@@ -1,6 +1,6 @@
 // @flow
 
-import { WebView, View } from 'react-native';
+import { WebView } from 'react-native';
 import React from 'react';
 
 const BODY_TAG_PATTERN = /<\/ *body>/;
@@ -38,6 +38,10 @@ const injection = `
       top: 0;
       left: 0;
       right: 0;
+    }
+    p {
+      margin: 0;
+      padding: 0;
     }
   </style>
   <script>
@@ -80,16 +84,14 @@ export default class WebViewAutoHeight extends React.Component {
     }
 
     return (
-      <View>
-        <WebView
-          {...otherProps}
-          source={{ html: codeInject(html) }}
-          scrollEnabled={false}
-          style={[style, { height: Math.max(this.state.contentHeight, MIN_HEIGHT) }]}
-          javaScriptEnabled
-          onNavigationStateChange={this._handleNavigationChange}
-        />
-      </View>
+      <WebView
+        {...otherProps}
+        source={{ html: codeInject(html) }}
+        scrollEnabled={false}
+        style={[style, { height: Math.max(this.state.contentHeight, MIN_HEIGHT) }]}
+        javaScriptEnabled
+        onNavigationStateChange={this._handleNavigationChange}
+      />
     );
   }
 }

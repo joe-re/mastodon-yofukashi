@@ -9,7 +9,7 @@ import TimelinesAPI from './api_utils/TimelinesAPI';
 import type { App } from './types/App';
 import type { Account } from './types/Account';
 import type { OAuth } from './types/OAuth';
-import type { Status } from './types/Status';
+import type { StatusResponse } from './types/Status';
 import type { State as AuthState } from './reducers/auth';
 
 type ENTER_DOMAIN_PAYLOAD = { payload: { domain: string, app: App } };
@@ -52,7 +52,7 @@ function login(params: { auth: AuthState, authorizationCode: string, cb?: Functi
   };
 }
 
-type GET_HOME_TIMELINE_PAYLOAD = { payload: { timeline: Status[] } };
+type GET_HOME_TIMELINE_PAYLOAD = { payload: { timeline: StatusResponse[] } };
 type GET_HOME_TIMELINE_ACTION = { type: 'GET_HOME_TIMELINE', payload: Promise<GET_HOME_TIMELINE_PAYLOAD> };
 type GET_HOME_TIMELINE_FULFILLED = { type: 'GET_HOME_TIMELINE_FULFILLED' } & GET_HOME_TIMELINE_PAYLOAD;
 function getHomeTimeline(params: { auth: AuthState }) {

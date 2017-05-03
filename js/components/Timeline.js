@@ -10,7 +10,36 @@ import type { Status } from '../types/Status';
 const styles = StyleSheet.create({
   row: {
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    padding: 8
+  },
+  avator: {
+    height: 40,
+    width: 40,
+    borderRadius: 3
+  },
+  rowHeader: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+    height: 20
+  },
+  displayName: {
+    marginRight: 4,
+    fontSize: 16
+  },
+  acct: {
+    fontSize: 12,
+    color: 'grey'
+  },
+  elapsed: {
+    marginLeft: 'auto',
+    color: 'grey'
+  },
+  rowContent: {
+    flex: 1,
+    marginLeft: 4
   },
   actions: {
     flex: 1,
@@ -21,13 +50,18 @@ const styles = StyleSheet.create({
   }
 });
 
-function renderRow(params: any) {
+function renderRow(params: Status) {
   return (
     <View style={styles.row} width={Dimensions.get('window').width}>
-      <Image style={{ height: 40, width: 40 }} source={{ uri: params.account.avatar }} />
-      <View style={{ flex: 1 }}>
-        <Text>{params.account.display_name}</Text>
+      <Image style={styles.avator} source={{ uri: params.account.avatar }} />
+      <View style={styles.rowContent}>
+        <View style={styles.rowHeader}>
+          <Text style={styles.displayName}>{params.account.display_name}</Text>
+          <Text style={styles.acct}>{params.account.acct}</Text>
+          <Text style={styles.elapsed}>{params.elapsed ? params.elapsed : ''}</Text>
+        </View>
         <WebView
+          style={{ padding: 0 }}
           source={{ html: params.content }}
         />
         <View style={styles.actions}>
@@ -44,7 +78,7 @@ export default function Timeline(props: { statuses: Status[], actions: typeof Ac
   return (
     <YofukashiListView
       dataSource={props.statuses}
-      renderRow={(v: any) => renderRow(v)}
+      renderRow={(v: Status) => renderRow(v)}
       rowHasChanged={(r1, r2) => r1 !== r2}
     />
   );
