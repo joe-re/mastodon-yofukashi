@@ -51,11 +51,12 @@ const injection = `
 
 const codeInject = html => html.replace(BODY_TAG_PATTERN, `${injection}</body>`);
 
-const MIN_HEIGHT = 40;
+const MIN_HEIGHT = 20;
 export default class WebViewAutoHeight extends React.Component {
   props: any;
   state: any;
   _handleNavigationChange: Function;
+  _webview: any;
 
   constructor(props: any) {
     super(props);
@@ -66,6 +67,7 @@ export default class WebViewAutoHeight extends React.Component {
   }
 
   handleNavigationChange(navState: any) {
+    this._webview.stopLoading();
     if (navState.title) {
       const contentHeight = parseInt(navState.title, 10) || 0;
       this.setState({ contentHeight });
@@ -86,6 +88,7 @@ export default class WebViewAutoHeight extends React.Component {
     return (
       <WebView
         {...otherProps}
+        ref={(ref) => { this._webview = ref; }}
         source={{ html: codeInject(html) }}
         scrollEnabled={false}
         style={[style, { height: Math.max(this.state.contentHeight, MIN_HEIGHT) }]}

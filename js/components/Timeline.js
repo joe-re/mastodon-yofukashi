@@ -13,12 +13,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     padding: 8
   },
-  boost: {
+  statusInfo: {
     marginLeft: 44,
     flexDirection: 'row',
     marginBottom: 4
   },
-  boostText: {
+  statusInfoText: {
     color: 'grey',
     fontSize: 12
   },
@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     marginLeft: 4
   },
   actions: {
+    marginTop: 8,
     flex: 1,
     flexDirection: 'row'
   },
@@ -65,12 +66,19 @@ const styles = StyleSheet.create({
 
 function renderRow(params: Status) {
   const status = params.reblog ? params.reblog : params;
+  const isReply = !!params.in_reply_to_account_id;
   return (
     <View style={styles.rowContainer} width={Dimensions.get('window').width}>
       { params.reblog &&
-        <View style={styles.boost}>
-          <Icon style={styles.boostText} name="retweet" size={12} />
-          <Text style={styles.boostText}>{params.account.display_name} boosted</Text>
+        <View style={styles.statusInfo}>
+          <Icon style={styles.statusInfoText} name="retweet" size={12} />
+          <Text style={styles.statusInfoText}>{params.account.display_name} boosted</Text>
+        </View>
+      }
+      { isReply &&
+        <View style={styles.statusInfo}>
+          <Icon style={styles.statusInfoText} name="reply" size={12} />
+          <Text style={styles.statusInfoText}>{params.account.display_name} replied</Text>
         </View>
       }
       <View style={styles.row}>
@@ -82,8 +90,8 @@ function renderRow(params: Status) {
             <Text style={styles.elapsed}>{status.elapsed ? status.elapsed : ''}</Text>
           </View>
           <WebView
-            style={{ padding: 0 }}
             source={{ html: status.content }}
+            onNavigationStateChange={(navState) => console.log(navState)}
           />
           <View style={styles.actions}>
             <Icon style={styles.action} name="reply" size={22} />
