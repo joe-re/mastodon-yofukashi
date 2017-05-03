@@ -37,8 +37,14 @@ function calucateElapsedTime(createdAt: Date): string {
 
 function appendElapsedAttr(statuses: StatusResponse[]): Status[] {
   return statuses.map((v) => {
-    const newStatus: any = Object.assign({}, v);
-    return Object.assign(newStatus, { elapsed: calucateElapsedTime(new Date(v.created_at)) });
+    let newStatus: any = Object.assign({}, v);
+    newStatus = Object.assign(newStatus, { elapsed: calucateElapsedTime(new Date(v.created_at)) });
+    if (newStatus.reblog) {
+      newStatus.reblog = Object.assign({}, newStatus.reblog, {
+        elapsed: calucateElapsedTime(new Date(newStatus.reblog.created_at))
+      });
+    }
+    return newStatus;
   });
 }
 

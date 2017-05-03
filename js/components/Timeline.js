@@ -8,10 +8,23 @@ import Actions from '../actions';
 import type { Status } from '../types/Status';
 
 const styles = StyleSheet.create({
+  rowContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    padding: 8
+  },
+  boost: {
+    marginLeft: 44,
+    flexDirection: 'row',
+    marginBottom: 4
+  },
+  boostText: {
+    color: 'grey',
+    fontSize: 12
+  },
   row: {
     flex: 1,
     flexDirection: 'row',
-    padding: 8
   },
   avator: {
     height: 40,
@@ -51,23 +64,32 @@ const styles = StyleSheet.create({
 });
 
 function renderRow(params: Status) {
+  const status = params.reblog ? params.reblog : params;
   return (
-    <View style={styles.row} width={Dimensions.get('window').width}>
-      <Image style={styles.avator} source={{ uri: params.account.avatar }} />
-      <View style={styles.rowContent}>
-        <View style={styles.rowHeader}>
-          <Text style={styles.displayName}>{params.account.display_name}</Text>
-          <Text style={styles.acct}>{params.account.acct}</Text>
-          <Text style={styles.elapsed}>{params.elapsed ? params.elapsed : ''}</Text>
+    <View style={styles.rowContainer} width={Dimensions.get('window').width}>
+      { params.reblog &&
+        <View style={styles.boost}>
+          <Icon style={styles.boostText} name="retweet" size={12} />
+          <Text style={styles.boostText}>{params.account.display_name} boosted</Text>
         </View>
-        <WebView
-          style={{ padding: 0 }}
-          source={{ html: params.content }}
-        />
-        <View style={styles.actions}>
-          <Icon style={styles.action} name="reply" size={22} />
-          <Icon style={styles.action} name="retweet" size={22} />
-          <Icon style={styles.action} name="star" size={22} />
+      }
+      <View style={styles.row}>
+        <Image style={styles.avator} source={{ uri: status.account.avatar }} />
+        <View style={styles.rowContent}>
+          <View style={styles.rowHeader}>
+            <Text style={styles.displayName}>{status.account.display_name}</Text>
+            <Text style={styles.acct}>{status.account.acct}</Text>
+            <Text style={styles.elapsed}>{status.elapsed ? status.elapsed : ''}</Text>
+          </View>
+          <WebView
+            style={{ padding: 0 }}
+            source={{ html: status.content }}
+          />
+          <View style={styles.actions}>
+            <Icon style={styles.action} name="reply" size={22} />
+            <Icon style={styles.action} name="retweet" size={22} />
+            <Icon style={styles.action} name="star" size={22} />
+          </View>
         </View>
       </View>
     </View>

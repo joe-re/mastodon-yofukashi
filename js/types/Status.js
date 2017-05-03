@@ -38,7 +38,7 @@ export type Status = {
   account: Account,
   in_reply_to_id: ?number,
   in_reply_to_account_id: ?number,
-  reblog: StatusResponse,
+  reblog: Status,
   content: string,
   created_at: string,
   reblogs_count: number,
