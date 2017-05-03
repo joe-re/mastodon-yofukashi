@@ -1,6 +1,6 @@
 // @flow
 
-import { View, Text, Dimensions, Image, StyleSheet } from 'react-native';
+import { Linking, View, Text, Dimensions, Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import WebView from './WebViewAutoHeight';
 import YofukashiListView from './YofukashiListView';
@@ -91,7 +91,15 @@ function renderRow(params: Status) {
           </View>
           <WebView
             source={{ html: status.content }}
-            onNavigationStateChange={(navState) => console.log(navState)}
+            onNavigationStateChange={(navState) => {
+              if (!navState.url.match(/^https?:\/\//)) return;
+              const mentionUrls = status.mentions.map(v => v.url);
+              if (mentionUrls.includes(navState.url)) {
+                // TODO: show user page
+              } else {
+                Linking.openURL(navState.url);
+              }
+            }}
           />
           <View style={styles.actions}>
             <Icon style={styles.action} name="reply" size={22} />
