@@ -3,16 +3,27 @@
 import { bindActionCreators } from 'redux';
 import type { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Component } from 'react';
+import React from 'react';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Actions from '../actions';
 import HomeTimelineScreen from '../components/HomeTimelineScreen';
 import type { ReduxState } from '../reducers';
 import type { State as AuthState } from '../reducers/auth';
 import type { State as TimelineState } from '../reducers/timeline';
 
-class TimelineContainer extends Component {
-  props: { auth: AuthState, actions: typeof Actions, timeline: TimelineState };
-  static navigationOptions = { title: 'Timeline' };
+class TimelineContainer extends React.Component {
+  props: { auth: AuthState, actions: typeof Actions, timeline: TimelineState, navigation: any };
+  static navigationOptions = props => ({
+    title: 'Timeline',
+    headerRight: (
+      <Icon
+        name="pencil-square-o"
+        style={{ marginRight: 8 }}
+        size={28}
+        onPress={() => props.navigation.navigate('Post')}
+      />
+    )
+  });
 
   render() {
     return <HomeTimelineScreen {...this.props} />;
