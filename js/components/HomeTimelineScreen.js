@@ -25,6 +25,7 @@ export default class HomeTimelineScreen extends Component {
   componentDidMount() {
     this.props.actions.getHomeTimeline({ auth: this.props.auth });
   }
+
   render() {
     return (
       <View style={styles.container}>

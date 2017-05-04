@@ -6,6 +6,7 @@ import { buildQueryURL } from './api_utils/Request';
 import AuthAPI from './api_utils/AuthAPI';
 import AccountsAPI from './api_utils/AccountsAPI';
 import TimelinesAPI from './api_utils/TimelinesAPI';
+import StatusesAPI from './api_utils/StatusesAPI';
 import type { App } from './types/App';
 import type { Account } from './types/Account';
 import type { OAuth } from './types/OAuth';
@@ -66,13 +67,30 @@ function getHomeTimeline(params: { auth: AuthState }) {
   };
 }
 
+type POST_TOOT_PAYLOAD = { payload: { status: StatusResponse } };
+type POST_TOOT_ACTION = { type: 'POST_TOOT', payload: Promise<POST_TOOT_PAYLOAD> };
+type POST_TOOT_FULFILLED = { type: 'POST_TOOT_FULFILLED' } & POST_TOOT_PAYLOAD;
+function postToot(params: { auth: AuthState, status: string }) {
+  return (dispatch: Dispatch<POST_TOOT_ACTION>) => {
+    const oauth = params.auth.oauth;
+    const fetch = StatusesAPI.create({
+      domain: params.auth.domain,
+      status: params.status,
+      accessToken: (oauth && oauth.access_token) || ''
+    }).then(res => ({ status: res }));
+    dispatch({ type: 'POST_TOOT', payload: fetch });
+  };
+}
+
 export type ActionTypes =
   ENTER_DOMAIN_FULFILLED |
   LOGIN_FULFILLED |
-  GET_HOME_TIMELINE_FULFILLED;
+  GET_HOME_TIMELINE_FULFILLED |
+  POST_TOOT_FULFILLED;
 
 export default {
   openAuthorizationLink,
   login,
-  getHomeTimeline
+  getHomeTimeline,
+  postToot
 };
